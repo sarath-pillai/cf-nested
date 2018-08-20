@@ -9,6 +9,7 @@ Parameters:
         Description: Security Group Will be part of this VPC id
     VPCCIDR:
         Description: VPC CIDR to allow all traffic from
+        Type: String
 Resources:
     GenericSecurityGroup:
         Type: AWS::EC2::SecurityGroup
@@ -22,7 +23,7 @@ Resources:
                   IpProtocol: '-1'
             Tags: 
                 - Key: Name
-                  Value: !Sub ${EnvironmentName}-VPC-Generic
+                  Value: !Sub ${Environment}-VPC-Generic
     LBSecurityGroup:
         Type: AWS::EC2::SecurityGroup
         Properties: 
@@ -35,7 +36,7 @@ Resources:
                   ToPort: 80
             Tags: 
                 - Key: Name
-                  Value: !Sub ${EnvironmentName}-LB
+                  Value: !Sub ${Environment}-LB
 Outputs:
     GenericSecurityGroup: 
         Description: Generic Security Group Detail
