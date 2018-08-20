@@ -79,21 +79,21 @@ Resources:
         Properties:
             VpcId: !Ref VPC
             AvailabilityZone: !Select [ 1, !GetAZs '' ]
-            CidrBlock: !Ref PubCIDR1
+            CidrBlock: !Ref PriCIDR2
             MapPublicIpOnLaunch: false
             Tags: 
                 - Key: Name 
                   Value: !Sub ${Environment} Priv Sub 2
     NGWEIP:
         Type: AWS::EC2::EIP
-        DependsOn: InternetGatewayAttachment
+        DependsOn: IGWA
         Properties: 
             Domain: vpc
     NGW: 
         Type: AWS::EC2::NatGateway
         Properties: 
-            AllocationId: !GetAtt NGW1EIP.AllocationId
-            SubnetId: !Ref PubCIDR1
+            AllocationId: !GetAtt NGWEIP.AllocationId
+            SubnetId: !Ref PUB1
     PUBROUTETABLE:
         Type: AWS::EC2::RouteTable
         Properties: 
