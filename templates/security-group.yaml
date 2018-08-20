@@ -1,0 +1,45 @@
+Description: >
+    Security Group Template.
+Parameters:
+    Environment:
+        Description: A name to identify the environment, this will be added to tags and resouces
+        Type: String
+    VPC:
+        Type: AWS::EC2::VPC::Id
+        Description: Security Group Will be part of this VPC id
+    VPCCIDR:
+        Description: VPC CIDR to allow all traffic from
+Resources:
+    GenericSecurityGroup:
+        Type: AWS::EC2::SecurityGroup
+        Properties: 
+            VpcId: !Ref VPC
+            GroupDescription: 
+            SecurityGroupIngress:
+                - CidrIp: !Ref VPCCIDR
+                  IpProtocol: '-1'
+                  FromPort: '-1'
+                  IpProtocol: '-1'
+            Tags: 
+                - Key: Name
+                  Value: !Sub ${EnvironmentName}-VPC-Generic
+    LBSecurityGroup:
+        Type: AWS::EC2::SecurityGroup
+        Properties: 
+            VpcId: !Ref VPC
+            GroupDescription: Load Balancer Security Group
+            SecurityGroupIngress:
+                - CidrIp: 0.0.0.0/0
+                  IpProtocol: tcp
+                  FromPort: '-1'
+                  ToPort: 80
+            Tags: 
+                - Key: Name
+                  Value: !Sub ${EnvironmentName}-LB
+Outputs:
+    GenericSecurityGroup: 
+        Description: Generic Security Group Detail
+        Value: !Ref GenericSecurityGroup
+    LBSecurityGroup:
+        Description: LB Security Group Detail
+        Value: !Ref LBSecurityGroup
