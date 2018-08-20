@@ -14,7 +14,7 @@ Resources:
         Type: AWS::EC2::SecurityGroup
         Properties: 
             VpcId: !Ref VPC
-            GroupDescription: 
+            GroupDescription: Generic Security Group for VPC 
             SecurityGroupIngress:
                 - CidrIp: !Ref VPCCIDR
                   IpProtocol: '-1'
