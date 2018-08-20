@@ -1,0 +1,24 @@
+Description: >
+    This template deploys a nested stack calling other templates. 
+Resources:
+    VPC:
+        Type: AWS::CloudFormation::Stack
+        Properties:
+            TemplateURL: https://s3.amazonaws.com/sarath-cf-nested/templates/vpc.yaml
+            Parameters:
+                Environment:        !Ref AWS::StackName
+                VPCCIDR:            10.120.0.0/16
+                PubCIDR1:           10.120.1.0/24
+                PubCIDR2:           10.120.2.0/24
+                PriCIDR1:           10.120.3.0/24
+                PriCIDR2:           10.120.4.0/24
+
+    SecurityGroups:
+        Type: AWS::CloudFormation::Stack
+        Properties:
+            TemplateURL: https://s3.amazonaws.com/sarath-cf-nested/templates/security-groups.yaml
+            Parameters: 
+                EnvironmentName: !Ref AWS::StackName
+                VPC: !GetAtt VPC.Outputs.VPC
+                VPCCIDR:  10.120.0.0/16
+
