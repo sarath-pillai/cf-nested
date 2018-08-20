@@ -18,7 +18,7 @@ Resources:
         Properties:
             TemplateURL: https://s3.amazonaws.com/sarath-cf-nested/templates/security-group.yaml
             Parameters: 
-                EnvironmentName: !Ref AWS::StackName
+                Environment: !Ref AWS::StackName
                 VPC: !GetAtt VPC.Outputs.VPC
                 VPCCIDR:  10.252.0.0/16
 
